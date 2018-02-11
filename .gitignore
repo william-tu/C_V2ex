@@ -105,3 +105,6 @@ config.py
 
 # migration
 migrations/
+
+# IDE
+.idea/
