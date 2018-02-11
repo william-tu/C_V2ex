@@ -102,3 +102,6 @@ ENV/
 
 # configuration
 config.py
+
+# migration
+migrations/
