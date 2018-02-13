@@ -6,10 +6,10 @@ from flask_httpauth import HTTPBasicAuth
 
 from app.decorates import json_field_acceptable
 from app.emails import send_email
-from app.models import User
+from app.models import User, Permission
+from app.pipelines import RedisPipeline
 from app.responses import unauthorized, suc_202
 from . import main
-from app.pipelines import RedisPipeline
 
 basic_auth = HTTPBasicAuth()
 
@@ -50,6 +50,11 @@ def verify_code():
     em = request.json.get('email')
     code = random.randrange(1000, 9999)
     send_email(em, code=code)
-    RedisPipeline().set_verify_code(em,code)
+    RedisPipeline().set_verify_code(em, code)
     return suc_202('send email successfully')
 
+
+@main.route('/permissions', methods=['GET'])
+@basic_auth.login_required
+def get_permissions():
+    return jsonify(Permission.to_json())

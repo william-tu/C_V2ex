@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 from collections import Iterable
 from functools import wraps
-
+from models import Permission
 from flask import request
 
-from responses import not_acceptable, bad_request
+from responses import not_acceptable, bad_request, forbbiden
 
 
 def json_field_acceptable(iterable_field, iterable_methods=[]):
@@ -32,3 +32,20 @@ def json_field_acceptable(iterable_field, iterable_methods=[]):
         return decorate
 
     return acceptable
+
+
+def permission_required(permission):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not g.current_user.can(permission):
+                return forbbiden('permission not match')
+            return f(*args, **kwargs)
+
+        return decorated_function
+
+    return decorator
+
+
+def admin_required(f):
+    return permission_required(Permission.ADMINISTER)(f)
