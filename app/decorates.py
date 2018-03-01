@@ -2,7 +2,7 @@
 from collections import Iterable
 from functools import wraps
 from models import Permission
-from flask import request
+from flask import request, g
 
 from responses import not_acceptable, bad_request, forbbiden
 
