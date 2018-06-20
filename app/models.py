@@ -191,4 +191,19 @@ class Comments(db.Model):
         db.session.commit()
 
 
+class Article(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data_id = db.Column(db.String(128), unique=True)
+    title = db.Column(db.String(128), nullable=False)
+    content = db.Column(db.Text)
+    message_url = db.Column(db.String(128))
+    image_url = db.Column(db.String(128))
+    add_time = db.Column(db.DateTime, default=datetime.now)
+    source_from = db.Column(db.String(64), nullable=False)
+
+    def to_json(self):
+        return {
+            'id': self.id,
+        }
+
 

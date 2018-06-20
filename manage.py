@@ -23,7 +23,7 @@ def _make_context():
 
 manager.add_command("shell", Shell(make_context=_make_context))
 manager.add_command("db", MigrateCommand)
-manager.add_command("resetDB", DropAndCreate)
+manager.add_command("reset_database", DropAndCreate)
 
 if __name__ == '__main__':
     manager.run(default_command="runserver")
