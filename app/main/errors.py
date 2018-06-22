@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from . import main
 from app.exceptions import ValidationError
-from app.responses import bad_request
+from app.responses import bad_request, not_found
 
 
 @main.errorhandler(ValidationError)

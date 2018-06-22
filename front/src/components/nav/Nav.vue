@@ -52,8 +52,7 @@
 
 <style scoped>
   .header {
-
-    height: 80px;
+    /*height: 80px;*/
   }
 
   h1 {
