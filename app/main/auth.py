@@ -8,7 +8,7 @@ from app.decorates import json_field_acceptable
 from app.emails import send_email
 from app.models import User, Permission
 from app.pipelines import RedisPipeline
-from app.responses import unauthorized, suc_202
+from app.responses import unauthorized, suc_202, suc_200
 from . import main
 
 basic_auth = HTTPBasicAuth()
@@ -21,6 +21,7 @@ def verify_password(email_or_token, code):
     if not code:
         g.current_user = User.verify_token(email_or_token)
         return g.current_user is not None
+    print email_or_token, code
     if RedisPipeline().get_verify_code(email_or_token) != code:
         return False
     user = User.query.filter_by(email=email_or_token).first()
@@ -58,3 +59,9 @@ def verify_code():
 @basic_auth.login_required
 def get_permissions():
     return jsonify(Permission.to_json())
+
+
+@main.route('/check-auth')
+@basic_auth.login_required
+def check_auth():
+    return suc_200('ok')

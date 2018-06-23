@@ -29,7 +29,7 @@ axios.interceptors.response.use(
         case 401:
           // 401 清除token信息并跳转到登录页面
           store.commit(types.LOGOUT);
-          if (router.name === types.LOGIN) {
+          if (router.currentRoute.name === types.LOGIN) {
             return error.response;
           }
           router.replace({
@@ -39,6 +39,6 @@ axios.interceptors.response.use(
       }
     }
     return Promise.reject(error)
-  })
+  });
 
 export default axios

@@ -23,9 +23,13 @@
               <el-menu-item index="2-4-3">选项3</el-menu-item>
             </el-submenu>
           </el-submenu>
+
           <el-menu-item index="3">
-            <router-link :to="{ name: 'login'}">
-              <el-button type="primary" round>登录/注册</el-button>
+
+              <el-button type="primary" round v-if="isLogin" @click="logout">注销</el-button>
+
+            <router-link :to="{ name: 'login'}" v-else>
+              <el-button type="primary" round>登录</el-button>
             </router-link>
           </el-menu-item>
         </el-menu>
@@ -35,16 +39,24 @@
 </template>
 
 <script>
+  import types from '@/store/types'
+  import store from '@/store/store'
+
   export default {
     name: "Nav",
-    data() {
+    data: function () {
       return {
-        activeIndex: '1'
+        activeIndex: '1',
+        isLogin: this.$store.state.token
       }
     },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
+      },
+      logout(){
+        store.commit(types.LOGOUT);
+        window.location.reload()
       }
     }
   }

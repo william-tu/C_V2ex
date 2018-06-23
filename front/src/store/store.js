@@ -3,12 +3,12 @@ import Vuex from 'vuex'
 import types from './types.js'
 import { Base64 } from 'js-base64'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
 
   state: {
-    token: null
+    token: null,
   },
   mutations: {
     [types.LOGIN]: (state, payload) => {
@@ -17,7 +17,11 @@ export default new Vuex.Store({
     },
     [types.LOGOUT]: (state) => {
       localStorage.removeItem('token');
-      state.token = null
-    }
-  }
+      state.token = null;
+      state.isLogin = false
+    },
+
+  },
+
+
 })
