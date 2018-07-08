@@ -27,10 +27,11 @@ axios.interceptors.response.use(
       // console.log(error.response)
       switch (error.response.status) {
         case 401:
+          console.log(router.currentRoute.name);
           // 401 清除token信息并跳转到登录页面
           store.commit(types.LOGOUT);
           if (router.currentRoute.name === types.LOGIN) {
-            return error.response;
+            return Promise.reject(error)
           }
           router.replace({
             path: 'login',

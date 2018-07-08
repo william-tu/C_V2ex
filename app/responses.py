@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import jsonify
+from flask import jsonify, request, url_for, current_app
 
 
 def forbbiden(message):
@@ -60,3 +60,17 @@ def suc_204(message):
     response = jsonify({'status': 'NO CONTENT', 'message': message})
     response.status_code = 204
     return response
+
+
+def pagination_response(Model):
+    page = request.args.get('page', 1, type=int)
+    pagination = Model.query.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    objs = pagination.items
+    prev = None
+    if pagination.has_prev:
+        prev = url_for(request.endpoint, page=page - 1, _external=True)
+    next = None
+    if pagination.has_next:
+        next = url_for(request.endpoint, page=page + 1, _external=True)
+    return jsonify({'data': [obj.to_json() for obj in objs], 'prev': prev, 'next': next, 'pages': pagination.pages,
+                    'count': pagination.total})

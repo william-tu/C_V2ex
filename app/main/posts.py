@@ -26,7 +26,7 @@ def get_posts():
     next = None
     if pagination.has_next:
         next = url_for('main.get_posts', page=page + 1, _external=True)
-    return jsonify({'posts': [post.to_json() for post in posts], 'prev': prev, 'next': next, 'pages': pagination.pages,
+    return jsonify({'data': [post.to_json() for post in posts], 'prev': prev, 'next': next, 'pages': pagination.pages,
                     'count': pagination.total})
 
 

@@ -204,6 +204,12 @@ class Article(db.Model):
     def to_json(self):
         return {
             'id': self.id,
+            'title': self.title,
+            'content': self.content,
+            'message_url': self.message_url,
+            'image_url': self.image_url,
+            'add_time': self.add_time.strftime('%Y-%m-%d %H:%M:%S'),
+            'source_from': self.source_from,
         }
 
 

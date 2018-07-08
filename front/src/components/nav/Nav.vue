@@ -50,13 +50,23 @@
         isLogin: this.$store.state.token
       }
     },
+    computed: {
+      getLoginStatus(){
+        return this.$store.state.token
+      }
+    },
+    watch:{
+      getLoginStatus(val){
+        this.isLogin = val;
+      }
+    },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
       logout(){
         store.commit(types.LOGOUT);
-        window.location.reload()
+
       }
     }
   }
