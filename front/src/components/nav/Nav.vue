@@ -74,7 +74,8 @@
 
 <style scoped>
   .header {
-    /*height: 80px;*/
+    height: 80px;
+    background-color: white;
   }
 
   h1 {
@@ -84,5 +85,6 @@
   .nav {
     border-bottom: solid 1px white !important;
     float: right;
+
   }
 </style>

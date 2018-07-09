@@ -1,9 +1,21 @@
 <template>
   <div id="app">
+
     <navba></navba>
     <div class="main-wrapper">
+      <router-view></router-view>
       <div class="main">
-        <router-view></router-view>
+        <el-row :gutter="20">
+          <el-col :span="18">
+            <div class="grid-content ">
+              <main-post></main-post>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content"> oterh </div>
+          </el-col>
+        </el-row>
+
       </div>
     </div>
   </div>
@@ -11,6 +23,8 @@
 
 <script>
   import navba from './components/nav/Nav.vue'
+  import MainPost from './components/MainPost'
+
 
   export default {
     name: 'app',
@@ -20,8 +34,14 @@
 
       }
     },
+    metaInfo: {
+      meta: [
+        { name: "referrer" ,content: "never" }
+      ]
+    },
     components: {
-      'navba': navba
+      'navba': navba,
+      'main-post': MainPost,
     }
   }
 </script>
@@ -29,6 +49,8 @@
 <style lang="scss">
   body {
     margin: 0px;
+    background-color: #e2e2e2;
+
   }
 
   #app {
@@ -42,8 +64,10 @@
   .main-wrapper {
     margin: 50px 100px;
   }
+
   .main {
     margin: 10px auto;
+
   }
 
   h1, h2 {
