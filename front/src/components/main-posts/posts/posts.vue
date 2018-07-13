@@ -1,17 +1,15 @@
 <template>
-    <div class="cell-post">
+    <div class="posts">
 
     </div>
 </template>
 
 <script>
     export default {
-        name: "CellPost"
+        name: "posts"
     }
 </script>
 
 <style scoped>
-  .cell-post{
-    padding: 10px;
-  }
+
 </style>

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager, Shell, Command
-
+from flask_script import Manager, Shell, Command, Server
+from gevent.pywsgi import WSGIServer
 from app import create_app, db
 from app.models import Role, User, Follow, Comments
 
@@ -20,6 +20,8 @@ class DropAndCreate(Command):
 def _make_context():
     return dict(app=app, Role=Role, User=User, Follow=Follow, db=db, Comments=Comments)
 
+
+# server = Server(Threaded=True)
 
 manager.add_command("shell", Shell(make_context=_make_context))
 manager.add_command("db", MigrateCommand)
