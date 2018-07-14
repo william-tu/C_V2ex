@@ -67,7 +67,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(128), unique=True)
     email = db.Column(db.String(128), unique=True, index=True)
-    avatar = db.Column(db.String(255))
+    avatar = db.Column(db.String(255), default="http://pbuf1enju.bkt.clouddn.com/default_avatar.png")
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     comments = db.relationship('Comments', backref='author', lazy='dynamic')
@@ -94,6 +94,7 @@ class User(db.Model):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'avatar': self.avatar,
             'posts': url_for('main.get_user_posts', id=self.id, _external=True)
         }
 
@@ -104,6 +105,10 @@ class User(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+        if not self.username:
+            self.username = current_app.config["USERNAME_PREFIX"] + '_' + str(self.id)
+            db.session.add(self)
+            db.session.commit()
 
     def generate_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
@@ -212,5 +217,3 @@ class Article(db.Model):
             'add_time': self.add_time.strftime('%Y-%m-%d %H:%M:%S'),
             'source_from': self.source_from,
         }
-
-

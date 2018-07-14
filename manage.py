@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager, Shell, Command, Server
+from flask_script import Manager, Shell, Command
 from gevent.pywsgi import WSGIServer
 from app import create_app, db
 from app.models import Role, User, Follow, Comments
@@ -21,11 +21,11 @@ def _make_context():
     return dict(app=app, Role=Role, User=User, Follow=Follow, db=db, Comments=Comments)
 
 
-# server = Server(Threaded=True)
-
 manager.add_command("shell", Shell(make_context=_make_context))
 manager.add_command("db", MigrateCommand)
 manager.add_command("reset_database", DropAndCreate)
 
 if __name__ == '__main__':
-    manager.run(default_command="runserver")
+    http_server = WSGIServer(('', 5000), app)
+    http_server.serve_forever()
+    #manager.run(default_command="runserver")

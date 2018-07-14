@@ -1,17 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HelloWord from '@/components/HelloWorld.vue'
 import Login from '@/components/Login.vue'
 import store from '@/store/store'
 import types from '@/store/types'
 import MainPostLayout from '@/components/layout/MainPostLayout'
+import UserInfoLayout from '@/components/layout/UserInfoLayout'
 
 Vue.use(VueRouter);
 
 
 // 页面刷新时，重新赋值token
 if (window.localStorage.getItem('token')) {
-  store.commit(types.LOGIN, {emailOrToken: window.localStorage.getItem('token')})
+  store.commit(types.LOGIN, {emailOrToken: window.localStorage.getItem('token')});
+  store.commit(types.setUserInfo, {
+    id: window.localStorage.getItem('userID'),
+    avatar: window.localStorage.getItem('userAvatar'),
+    username: window.localStorage.getItem('username')
+  })
 }
 
 const routes = [
@@ -21,14 +26,14 @@ const routes = [
     component: MainPostLayout
   },
   {
-    path: "/hello",
-    name: 'hello',
-    component: HelloWord
-  },
-  {
     path: '/login',
     name: types.LOGIN,
     component: Login
+  },
+  {
+    path: '/user-info',
+    name: 'user-info',
+    component: UserInfoLayout,
   }
 
 

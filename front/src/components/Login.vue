@@ -53,7 +53,7 @@
               method: 'get',
               url: '/token',
             }).then((res) => {
-              store.commit(types.LOGIN,{emailOrtoken: res.data.token});
+              store.commit(types.LOGIN, {emailOrtoken: res.data.token});
               this.$router.push({
                 path: this.$route.query.redirect || '/'
 
@@ -72,19 +72,30 @@
             this.$message.error("表单填写不正确，请检查");
             return false
           }
+          this.axios({
+            method: 'get',
+            url: '/current-user/info',
+          }).then((res) => {
+            console.log(res)
+            store.commit(types.setUserInfo, {username: res.data.username, id: res.data.id, avatar: res.data.avatar})
+            console.log(store.state.userAvatar)
+          }).catch((error) => {
+            console.log(error);
+          })
+
         })
 
       },
       sendCode() {
         let formError = false;
-        this.$refs.form.validateField("email",(error) => {
+        this.$refs.form.validateField("email", (error) => {
           if (error) {
             this.$message.error(error);
             formError = true;
           }
         });
-        if (formError){
-          return ;
+        if (formError) {
+          return;
         }
         this.axios({
             method: 'post',
@@ -97,7 +108,7 @@
         ).then((res) => {
           this.$message.success("发送邮件成功");
         }).catch((error) => {
-          this.$message.error("发送验证码失败"+error.message);
+          this.$message.error("发送验证码失败" + error.message);
         });
         this.form.isSendCode = true;
         this.form.remainTime = 60;

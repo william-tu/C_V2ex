@@ -2,16 +2,14 @@
   <div id="app">
 
     <navba></navba>
-    <div class="main-wrapper">
-      <router-view></router-view>
+    <router-view></router-view>
 
-    </div>
+
   </div>
 </template>
 
 <script>
   import navba from './components/nav/Nav.vue'
-
 
 
   export default {
@@ -49,15 +47,6 @@
     color: #2c3e50;
   }
 
-  .main-wrapper {
-    margin: 50px 100px;
-  }
-
-  .main {
-    margin: 10px auto;
-
-  }
-
   h1, h2 {
     font-weight: normal;
   }
@@ -74,5 +63,11 @@
 
   a {
     color: #42b983;
+    text-decoration: none;
+  }
+
+  .avatar {
+    border-radius: 50%;
+
   }
 </style>

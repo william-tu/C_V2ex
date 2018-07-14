@@ -40,7 +40,7 @@
     created: function () {
       this.axios.get('/articles').then((res) => {
         this.posts = res.data['data'];
-        this.totalPage = res.data['pages']*10;
+        this.totalPage = res.data['pages'] * 10;
       }).catch((error) => {
           console.log(error)
         }
