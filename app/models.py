@@ -100,6 +100,7 @@ class User(db.Model):
 
     def from_json(self, update_msg):
         self.username = update_msg.get('username') if update_msg.get('username') else self.username
+        self.avatar = update_msg.get('avatar') if update_msg.get("avatar") else self.avatar
         self.save()
 
     def save(self):
@@ -120,7 +121,7 @@ class User(db.Model):
         try:
             data = s.loads(token)
         except BadData:
-            return False
+            return None
         return User.query.filter_by(id=data['id']).first()
 
     def follow(self, user):

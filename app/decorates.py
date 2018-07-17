@@ -34,6 +34,27 @@ def json_field_acceptable(iterable_field, iterable_methods=[]):
     return acceptable
 
 
+def json_params_required(matching_mode_list):
+    """
+    检查请求参数及方法装饰器
+    :param matching_mode_list: type dict eg:[{'methods':['POST'],'field':'id','required':True}]
+    :return:
+    """
+
+    def required(f):
+        @wraps(f)
+        def de(*args, **kwargs):
+            for mode in matching_mode_list:
+                if request.method in mode.get("methods") and mode.get('required'):
+                    if mode.get('field') not in request.json:
+                        return bad_request('params field:' + mode.get('field') + '  less')
+            return f(*args, **kwargs)
+
+        return de
+
+    return required
+
+
 def permission_required(permission):
     def decorator(f):
         @wraps(f)

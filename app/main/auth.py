@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 import random
 
-from flask import g, jsonify, request
+from flask import g, jsonify, request, current_app
 from flask_httpauth import HTTPBasicAuth
+from qiniu import Auth
 
 from app.decorates import json_field_acceptable
 from app.emails import send_email
@@ -20,7 +21,7 @@ def verify_password(email_or_token, code):
         return False
     if not code:
         g.current_user = User.verify_token(email_or_token)
-        return g.current_user is not None
+        return g.current_user
     print email_or_token, code
     if RedisPipeline().get_verify_code(email_or_token) != code:
         return False
@@ -61,7 +62,10 @@ def get_permissions():
     return jsonify(Permission.to_json())
 
 
-@main.route('/check-auth')
+@main.route('/qiniu-auth/token')
 @basic_auth.login_required
-def check_auth():
-    return suc_200('ok')
+def qiniu_auth_token():
+    q = Auth(current_app.config["ACCESS_KEY"], current_app.config["SECRETE_KEY"])
+    expiration = 3600
+    token = q.upload_token(current_app.config["BUCKET_NAME"], None, expiration)
+    return jsonify({"token": token, "expiration": expiration})

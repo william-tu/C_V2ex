@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from './store/store'
 import types from './store/types'
 import router from './router/index'
+import {Base64} from 'js-base64'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = 'http://127.0.0.1:5000/api/v1.0'
@@ -9,7 +10,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:5000/api/v1.0'
 axios.interceptors.request.use(
   config => {
     if (store.state.token) {
-      config.headers.common['Authorization'] = store.state.token
+      console.log(store.state.token)
+      config.headers.common['Authorization'] = 'Basic ' + Base64.encode(store.state.token)
     }
     return config
   },
@@ -34,7 +36,7 @@ axios.interceptors.response.use(
             return Promise.reject(error)
           }
           router.replace({
-            path: 'login',
+            name: 'login',
             query: {redirect: router.currentRoute.fullPath}
           })
       }

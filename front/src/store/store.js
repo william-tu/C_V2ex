@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import types from './types.js'
-import { Base64 } from 'js-base64'
 
 Vue.use(Vuex);
 
@@ -15,8 +14,17 @@ export default new Vuex.Store({
   },
   mutations: {
     [types.LOGIN]: (state, payload) => {
-      state.token = 'Basic ' + Base64.encode(payload.emailOrToken + ':' + payload.password);
+      if (payload.password) {
+        state.token = payload.emailOrToken + ':' + payload.password
+      } else {
+        state.token = payload.emailOrToken + ':'
+      }
       localStorage.token = state.token
+    },
+    [types.REFRESH]: (state, payload) => {
+      state.token = payload.token
+
+
     },
     [types.setUserInfo]: (state, userInfo) => {
       state.userID = userInfo.id;
@@ -27,6 +35,7 @@ export default new Vuex.Store({
       localStorage.userAvatar = state.userAvatar;
     },
     [types.LOGOUT]: (state) => {
+      console.log(state.token)
       localStorage.removeItem('token');
       localStorage.removeItem('userID');
       localStorage.removeItem('username');
@@ -36,6 +45,15 @@ export default new Vuex.Store({
       state.username = null;
       state.userAvatar = null;
     },
+    [types.UPDATE]: (state,payload) => {
+      for (let p in payload){
+        state[p] = payload[p];
+        localStorage[p] = payload[p]
+      }
+
+
+    }
+
 
   },
 

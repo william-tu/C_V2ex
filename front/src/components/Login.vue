@@ -53,7 +53,7 @@
               method: 'get',
               url: '/token',
             }).then((res) => {
-              store.commit(types.LOGIN, {emailOrtoken: res.data.token});
+              store.commit(types.LOGIN, {emailOrToken: res.data.token});
               this.$router.push({
                 path: this.$route.query.redirect || '/'
 
@@ -76,9 +76,7 @@
             method: 'get',
             url: '/current-user/info',
           }).then((res) => {
-            console.log(res)
             store.commit(types.setUserInfo, {username: res.data.username, id: res.data.id, avatar: res.data.avatar})
-            console.log(store.state.userAvatar)
           }).catch((error) => {
             console.log(error);
           })
@@ -129,6 +127,6 @@
 <style scoped>
   .login {
     width: 40%;
-    margin: 10px auto;
+    margin: 50px auto;
   }
 </style>

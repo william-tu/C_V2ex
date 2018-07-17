@@ -28,4 +28,4 @@ manager.add_command("reset_database", DropAndCreate)
 if __name__ == '__main__':
     http_server = WSGIServer(('', 5000), app)
     http_server.serve_forever()
-    #manager.run(default_command="runserver")
+    # manager.run(default_command="runserver")

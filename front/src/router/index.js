@@ -5,13 +5,16 @@ import store from '@/store/store'
 import types from '@/store/types'
 import MainPostLayout from '@/components/layout/MainPostLayout'
 import UserInfoLayout from '@/components/layout/UserInfoLayout'
+import UserInfoNav from '@/components/nav/UserInfoNav'
+import main_info from '@/components/user/main-info'
+import user_profile from '@/components/user/user-profile'
 
 Vue.use(VueRouter);
 
 
 // 页面刷新时，重新赋值token
 if (window.localStorage.getItem('token')) {
-  store.commit(types.LOGIN, {emailOrToken: window.localStorage.getItem('token')});
+  store.commit(types.REFRESH, {token: window.localStorage.getItem('token')});
   store.commit(types.setUserInfo, {
     id: window.localStorage.getItem('userID'),
     avatar: window.localStorage.getItem('userAvatar'),
@@ -27,13 +30,17 @@ const routes = [
   },
   {
     path: '/login',
-    name: types.LOGIN,
+    name: 'login',
     component: Login
   },
   {
-    path: '/user-info',
-    name: 'user-info',
+    path: '/user',
+    name: 'user',
     component: UserInfoLayout,
+    children: [
+      {path: 'info', name: 'user-info', component: main_info},
+      {path: 'profile', name: 'user-profile', component: user_profile}
+    ]
   }
 
 

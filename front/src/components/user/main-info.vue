@@ -1,7 +1,7 @@
 <template>
   <div class="main-info">
     <el-container>
-      <el-aside width="410px">
+      <el-aside width="350px">
         <el-row class="tac">
           <el-col :span="12">
             <el-menu
@@ -48,5 +48,8 @@
 <style scoped>
   .el-aside {
     text-align: right;
+  }
+  .main-info{
+    min-width: 1250px;
   }
 </style>

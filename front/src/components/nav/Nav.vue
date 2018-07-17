@@ -44,7 +44,7 @@
     data: function () {
       return {
         activeIndex: '1',
-        isLogin: this.$store.state.token,
+        isLogin: store.state.token,
         avatar: store.state.userAvatar,
         username: store.state.username,
       }
