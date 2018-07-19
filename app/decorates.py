@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from collections import Iterable
 from functools import wraps
-from models import Permission
+from models import Permission, User
 from flask import request, g
 
 from responses import not_acceptable, bad_request, forbbiden
@@ -70,3 +70,25 @@ def permission_required(permission):
 
 def admin_required(f):
     return permission_required(Permission.ADMINISTER)(f)
+
+
+def user_own_required(methods, user_id_key):
+    """
+    权限控制装饰器 只能允许用户自己控制自己所属的资源 （管理员除外）
+    :param methods: http method list eg:['GET']
+    :param user_id_key: 参数user id的参数名
+    :return:
+    """
+
+    def de(f):
+        @wraps(f)
+        def decorate(*args, **kwargs):
+
+            if request.method in methods and not g.current_user.can(Permission.ADMINISTER):
+                if not g.current_user == User.query.get_or_404(kwargs.get(user_id_key)):
+                    return forbbiden('permission not allow')
+            return f(*args, **kwargs)
+
+        return decorate
+
+    return de

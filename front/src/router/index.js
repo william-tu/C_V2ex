@@ -5,7 +5,7 @@ import store from '@/store/store'
 import types from '@/store/types'
 import MainPostLayout from '@/components/layout/MainPostLayout'
 import UserInfoLayout from '@/components/layout/UserInfoLayout'
-import UserInfoNav from '@/components/nav/UserInfoNav'
+import edit_post from '@/components/edit/edit-post'
 import main_info from '@/components/user/main-info'
 import user_profile from '@/components/user/user-profile'
 
@@ -41,6 +41,11 @@ const routes = [
       {path: 'info', name: 'user-info', component: main_info},
       {path: 'profile', name: 'user-profile', component: user_profile}
     ]
+  },
+  {
+    path: '/edit',
+    name: 'edit',
+    component: edit_post
   }
 
 

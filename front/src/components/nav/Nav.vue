@@ -16,7 +16,7 @@
             <el-submenu index="2">
               <template slot="title"><span>{{ username }}</span>&nbsp;&nbsp;<img v-bind:src="avatar" width="20px" height="20px" alt="" class="avatar"></template>
               <el-menu-item index="2-1"><router-link :to="{ name: 'user-info'}">个人资料</router-link></el-menu-item>
-              <el-menu-item index="2-2">选项2</el-menu-item>
+              <el-menu-item index="2-2"><router-link :to="{ name: 'edit'}"><i class="el-icon-edit"></i>创建新主题</router-link></el-menu-item>
               <el-menu-item index="2-3"><a @click="logout">注销</a>
               </el-menu-item>
             </el-submenu>
@@ -87,6 +87,8 @@
   .header {
     height: 80px;
     background-color: white;
+    border: 1px solid #dcdfe6;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
   }
 
   h1 {

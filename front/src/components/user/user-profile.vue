@@ -16,6 +16,8 @@
 
 <script>
   import store from '@/store/store'
+  import api from '@/api'
+  import types from '@/store/types'
 
   export default {
     name: "user-profile",
@@ -26,9 +28,19 @@
         },
       }
     },
-    methods:{
-      onSubmit(){
-        console.log(this.form.username)
+    methods: {
+      onSubmit() {
+        if (store.state.username === this.form.username) {
+          this.$message("未修改内容");
+          return;
+        }
+        this.axios.put('/users/'+store.state.userID+'/info', {'username': this.form.username}).then((res) => {
+          store.commit(types.UPDATE, {username: this.form.username});
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          });
+        })
       },
 
     }
@@ -45,31 +57,6 @@
     width: 460px;
   }
 
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
 
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-
-  .avatar {
-    width: 100px;
-    height: 100px;
-    display: block;
-  }
 
 </style>

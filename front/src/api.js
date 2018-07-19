@@ -5,6 +5,6 @@ export default {
     loadDomain: 'http://pbuf1enju.bkt.clouddn.com/'
   },
   user: {
-    updateInfo: '/current-user/info'
+    updateInfo: '/current-user/info',
   }
 }

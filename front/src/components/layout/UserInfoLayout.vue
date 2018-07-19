@@ -10,6 +10,7 @@
 
 <script>
   import UserInfoNav from '@/components/nav/UserInfoNav'
+
   export default {
     name: "UserInfoLayout",
     components: {
@@ -22,11 +23,10 @@
 <style scoped>
 
 
-
-
   .main-info-wrapper {
     background-color: white;
     padding: 90px 50px;
+
   }
 
 </style>
