@@ -4,7 +4,10 @@
       <el-form-item label="标题">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
+      <el-form-item label="正文">
+        <quillEditor v-model="form.body"></quillEditor>
 
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
         <el-button>取消</el-button>
@@ -14,12 +17,19 @@
 </template>
 
 <script>
+  import 'quill/dist/quill.core.css'
+  import 'quill/dist/quill.snow.css'
+  import 'quill/dist/quill.bubble.css'
+
+  import {quillEditor} from 'vue-quill-editor'
+
   export default {
     name: "edit-post",
     data() {
       return {
         form: {
           name: '',
+          body: ''
 
         }
       }
@@ -28,6 +38,9 @@
       onSubmit() {
         console.log('submit!');
       }
+    },
+    components: {
+      quillEditor
     }
   }
 </script>
