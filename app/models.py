@@ -146,6 +146,7 @@ class User(db.Model):
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -154,6 +155,7 @@ class Post(db.Model):
     def to_json(self):
         return {
             'id': self.id,
+            'title': self.title,
             'body': self.body,
             'timestamp': self.timestamp,
             'author': url_for('main.get_user', id=self.author_id, _external=True)
@@ -162,9 +164,10 @@ class Post(db.Model):
     @staticmethod
     def from_json(json_post):
         body = json_post.get('body')
-        if not body:
-            raise ValidationError('post does not have body')
-        return Post(body=body)
+        title = json_post.get('title')
+        if not body or not title:
+            raise ValidationError('post does not have body or title')
+        return Post(title=title, body=body)
 
     def save(self):
         db.session.add(self)

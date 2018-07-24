@@ -51,6 +51,6 @@ def delete_post(p_id):
 @permission_required(Permission.WRITE_ARTICLES)
 def new_post():
     post = Post.from_json(request.json)
-    post.user = g.current_user
+    post.author = g.current_user
     post.save()
     return jsonify(post.to_json())
