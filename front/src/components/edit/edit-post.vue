@@ -1,16 +1,16 @@
 <template>
   <div class="edit-post">
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="标题">
-        <el-input v-model="form.name"></el-input>
+    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="form.title" ></el-input>
       </el-form-item>
-      <el-form-item label="正文">
-        <quillEditor v-model="form.body"></quillEditor>
+      <el-form-item label="正文" prop="body">
+        <quillEditor v-model="form.body" ></quillEditor>
 
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
+        <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
+        <el-button @click="resetForm('form')">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -22,26 +22,52 @@
   import 'quill/dist/quill.bubble.css'
 
   import {quillEditor} from 'vue-quill-editor'
+  import api from '@/api'
 
   export default {
     name: "edit-post",
     data() {
       return {
         form: {
-          name: '',
+          title: '',
           body: ''
 
+        },
+        rules: {
+          title: [
+            {required: true, message: '请输入标题', trigger: 'blur'}
+          ],
+          body: [
+            {required: true, message: '请输入正文', trigger: 'blur'}
+          ],
         }
       }
     },
     methods: {
-      onSubmit() {
-        console.log('submit!');
+      onSubmit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log(valid)
+            this.axios.post(api.posts, {title: this.form.title, body: this.form.body}).then(res => {
+              this.$message.success('发表成功')
+            }).catch(error => {
+              this.$message.error(error)
+            })
+          }else {
+            this.$message.error("请检查表单")
+          }
+
+        })
+
+      },
+      resetForm(form) {
+        this.$refs[form].resetFields();
       }
     },
     components: {
       quillEditor
     }
+
   }
 </script>
 

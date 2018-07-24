@@ -6,5 +6,7 @@ export default {
   },
   user: {
     updateInfo: '/current-user/info',
-  }
+  },
+  posts: '/posts'
+
 }
