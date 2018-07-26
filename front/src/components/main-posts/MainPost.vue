@@ -4,7 +4,7 @@
       <el-tab-pane label="用户管理" name="first">
         <articles></articles>
       </el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+      <el-tab-pane label="文章" name="second"><posts></posts></el-tab-pane>
       <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
       <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
     </el-tabs>
@@ -14,6 +14,7 @@
 
 <script>
   import articles from './posts/articles'
+  import posts from './posts/posts'
 
   export default {
     name: "MainPost",
@@ -25,6 +26,7 @@
     },
     components: {
       'articles': articles,
+      posts
     },
     methods: {
       handleClick(tab, event) {
@@ -36,7 +38,7 @@
   }
 </script>
 
-<style>
+<style >
   .main-post {
     background-color: white;
   }
@@ -44,6 +46,7 @@
   a, a:hover {
     color: #37a;
     text-decoration: None;
+    font-weight: bold;
 
   }
 
