@@ -13,6 +13,11 @@ Vue.use(ElementUI);
 Vue.use(VueMeta);
 Vue.prototype.axios = axios;
 Vue.prototype.$message = Message;
+Vue.prototype.msg = function (msg) {
+
+  return msg.replace(/<[^>]*>/g,'')
+
+};
 
 new Vue({
   el: '#app',
