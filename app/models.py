@@ -151,6 +151,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comments', backref='posts', lazy='dynamic')
+    cover_image = db.Column(db.String(128))  # 封面图片
 
     def to_json(self):
         return {
@@ -158,7 +159,8 @@ class Post(db.Model):
             'title': self.title,
             'body': self.body,
             'timestamp': self.timestamp,
-            'author': url_for('main.get_user', id=self.author_id, _external=True)
+            'author': url_for('main.get_user', id=self.author_id, _external=True),
+            'cover_image': self.cover_image
         }
 
     @staticmethod
@@ -170,6 +172,12 @@ class Post(db.Model):
         return Post(title=title, body=body)
 
     def save(self):
+        if not self.cover_image:
+            from lxml import etree
+            selector = etree.HTML(self.body)
+            s = selector.xpath('//img/@src')
+            if s:
+                self.cover_image = s.pop(0)
         db.session.add(self)
         db.session.commit()
 
