@@ -43,12 +43,7 @@
     background-color: white;
   }
 
-  a, a:hover {
-    color: #37a;
-    text-decoration: None;
-    font-weight: bold;
 
-  }
 
 
 </style>

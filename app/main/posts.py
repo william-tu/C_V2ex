@@ -30,17 +30,17 @@ def get_posts():
                     'count': pagination.total})
 
 
-@main.route('/posts/<int:p_id>', methods=['GET'])
-def get_post(p_id):
-    post = Post.query.get_or_404(p_id)
+@main.route('/posts/<int:id>', methods=['GET'])
+def get_post(id):
+    post = Post.query.get_or_404(id)
     return jsonify(post.to_json())
 
 
-@main.route('/posts/<int:p_id>', methods=['DELETE'])
+@main.route('/posts/<int:id>', methods=['DELETE'])
 @basic_auth.login_required
 @permission_required(Permission.MODERATE_ARTICLES_COMMENTS)
-def delete_post(p_id):
-    post = Post.query.get_or_404(p_id)
+def delete_post(id):
+    post = Post.query.get_or_404(id)
     post.delete()
     return suc_204('delete post successfully')
 

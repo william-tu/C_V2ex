@@ -3,11 +3,12 @@ import VueRouter from 'vue-router'
 import Login from '@/components/Login.vue'
 import store from '@/store/store'
 import types from '@/store/types'
-import MainPostLayout from '@/components/layout/MainPostLayout'
-import UserInfoLayout from '@/components/layout/UserInfoLayout'
+import MainPostLayout from '@/components/main-posts/MainPostLayout'
+import UserInfoLayout from '@/components/user/UserInfoLayout'
 import edit_post from '@/components/edit/edit-post'
 import main_info from '@/components/user/main-info'
 import user_profile from '@/components/user/user-profile'
+import SinglePostLayout from '@/components/post/SinglePostLayout'
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,13 @@ const routes = [
     path: '/edit',
     name: 'edit',
     component: edit_post
+  },
+  {
+    path: '/post/:id',
+    name: 'post',
+    props: true,
+    component: SinglePostLayout
+
   }
 
 

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import UserInfoNav from '@/components/nav/UserInfoNav'
+  import UserInfoNav from './UserInfoNav'
 
   export default {
     name: "UserInfoLayout",

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import navba from './components/nav/Nav.vue'
+  import navba from './components/Nav.vue'
 
 
   export default {
@@ -62,7 +62,12 @@
     margin: 0 10px;
   }
 
+  a, a:hover {
+    color: #37a;
+    text-decoration: None;
+    font-weight: bold;
 
+  }
 
   .avatar {
     border-radius: 50%;

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import user_info from '@/components/user/user-info'
+  import user_info from './user-info'
 
   export default {
     name: "UserInfoNav",

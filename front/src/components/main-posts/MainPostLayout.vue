@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import MainPost from '@/components/main-posts/MainPost'
+  import MainPost from './MainPost'
 
   export default {
     name: "MainPostLayout",
