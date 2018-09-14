@@ -8,6 +8,17 @@ from app import db
 from app.exceptions import ValidationError
 
 
+class SaveMixin(object):
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
 class Permission(object):
     FOLLOW = 0x01
     COMMENT = 0x02
@@ -201,7 +212,8 @@ class Comments(db.Model):
         return {
             'id': self.id,
             'body': self.body,
-            'timestamp': self.timestamp,
+            'created': self.created,
+            'update': self.update,
             'disable': self.disable,
             'author': url_for('main.get_user', id=self.author_id, _external=True),
             'post': url_for('main.get_post', id=self.post_id, _external=True)
