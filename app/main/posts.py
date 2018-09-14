@@ -6,6 +6,7 @@ from app.models import Post, User, Permission
 from app.responses import suc_204
 from auth import basic_auth
 from . import main
+from sqlalchemy import desc
 
 
 @main.route('/users/<int:id>/posts', methods=['GET'])
@@ -18,7 +19,8 @@ def get_user_posts(id):
 @main.route('/posts', methods=['GET'])
 def get_posts():
     page = request.args.get('page', 1, type=int)
-    pagination = Post.query.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    pagination = Post.query.order_by(desc('created')).paginate(page, per_page=current_app.config['POSTS_PER_PAGE'],
+                                                               error_out=True)
     posts = pagination.items
     prev = None
     if pagination.has_prev:

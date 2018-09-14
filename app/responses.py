@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import jsonify, request, url_for, current_app
+from sqlalchemy import desc as model_desc
 
 
 def forbbiden(message):
@@ -62,9 +63,17 @@ def suc_204(message):
     return response
 
 
-def pagination_response(Model):
+def pagination_response(model, order_by_field=None, desc=True):
     page = request.args.get('page', 1, type=int)
-    pagination = Model.query.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    if order_by_field:
+        if desc:
+            pagination = model.query.order_by(model_desc(order_by_field)).paginate(page, per_page=current_app.config[
+                'POSTS_PER_PAGE'], error_out=True)
+        else:
+            pagination = model.query.order_by(order_by_field).paginate(page, per_page=current_app.config[
+                'POSTS_PER_PAGE'], error_out=True)
+    else:
+        pagination = model.query.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=True)
     objs = pagination.items
     prev = None
     if pagination.has_prev:

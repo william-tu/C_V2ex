@@ -9,11 +9,15 @@
         </el-header>
         <el-container>
           <el-main>
-            <div style="margin-bottom: 10px"><a href="">{{ post.title }}</a></div>
+            <div style="margin-bottom: 10px">
+              <router-link :to="{name:'post',params:{id:post.id}}">{{ post.title }}</router-link>
+            </div>
             <div>{{ msg(post.body).slice(0,100)}}...</div>
           </el-main>
 
-          <el-aside width="100px"><a href=""><img id='thumbnail' v-bind:src="post.cover_image" alt=""></a>
+          <el-aside width="100px">
+            <router-link :to="{name:'post',params:{id:post.id}}"><img id='thumbnail' v-bind:src="post.cover_image"
+                                                                      alt=""></router-link>
           </el-aside>
         </el-container>
       </el-container>
@@ -60,7 +64,7 @@
             this.$set(post, 'avatar', res.data.avatar)
             this.$set(post, 'username', res.data.username)
             if (!post.cover_image) {
-              this.$set(post, 'cover_image', 'http://cdnq.duitang.com/uploads/blog/201407/18/20140718094627_uNCK2.thumb.700_0.jpeg')
+              this.$set(post, 'cover_image', 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg')
 
             }
           })

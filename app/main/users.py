@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 from flask import g, request, jsonify
 
-from app.decorates import json_field_acceptable, json_params_required, user_own_required
+from app.decorates import json_params_required, user_own_required
 from app.models import User
-from app.responses import suc_201, bad_request
+from app.responses import suc_201
 from auth import basic_auth
 from . import main
 

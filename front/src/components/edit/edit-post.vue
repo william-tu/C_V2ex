@@ -11,9 +11,10 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
-        <el-button @click="resetForm('form')">取消</el-button>
+        <el-button @click="resetForm('form')">清空</el-button>
       </el-form-item>
     </el-form>
+
   </div>
 </template>
 
@@ -58,6 +59,7 @@
           if (valid) {
             this.axios.post(api.posts, {title: this.form.title, body: this.form.body}).then(res => {
               this.$message.success('发表成功')
+              this.$router.push({name: 'post', params: {id: res.data.id}})
             }).catch(error => {
               this.$message.error(error)
             })

@@ -148,7 +148,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     body = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    created = db.Column(db.DateTime, index=True, default=datetime.now)
+    update = db.Column(db.DateTime, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comments', backref='posts', lazy='dynamic')
     cover_image = db.Column(db.String(128))  # 封面图片
@@ -158,7 +159,8 @@ class Post(db.Model):
             'id': self.id,
             'title': self.title,
             'body': self.body,
-            'timestamp': self.timestamp,
+            'created': self.created,
+            'update': self.update,
             'author': url_for('main.get_user', id=self.author_id, _external=True),
             'cover_image': self.cover_image
         }
@@ -189,7 +191,8 @@ class Post(db.Model):
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+    created = db.Column(db.DateTime, index=True, default=datetime.now)
+    update = db.Column(db.DateTime, default=datetime.now)
     disable = db.Column(db.Boolean)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))

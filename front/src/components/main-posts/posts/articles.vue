@@ -64,11 +64,11 @@
           } else if (post.source_from === '知乎日报网') {
             avatar_url = 'http://daily.zhihu.com/img/new_home_v3/top_logo.png'
           }
-          if (post.content.startsWith('http')){
-            this.$set(post,'content','[图片]')
+          if (post.content.startsWith('http')) {
+            this.$set(post, 'content', '[图片]')
           }
           if (!post.image_url) {
-            this.$set(post, 'image_url', 'http://cdnq.duitang.com/uploads/blog/201407/18/20140718094627_uNCK2.thumb.700_0.jpeg')
+            this.$set(post, 'image_url', 'http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg')
 
           }
           this.$set(post, 'avatar', avatar_url)

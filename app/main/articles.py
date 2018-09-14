@@ -6,4 +6,4 @@ from . import main
 
 @main.route("/articles", methods=['GET'])
 def get_articles():
-    return pagination_response(Article)
+    return pagination_response(Article, order_by_field='add_time')
