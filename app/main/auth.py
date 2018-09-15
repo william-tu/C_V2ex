@@ -6,7 +6,7 @@ from flask_httpauth import HTTPBasicAuth
 from qiniu import Auth
 
 from app.decorates import json_field_acceptable
-from app.emails import send_email
+from app.tasks import send_email
 from app.models import User, Permission
 from app.pipelines import RedisPipeline
 from app.responses import unauthorized, suc_202, suc_200
@@ -51,7 +51,7 @@ def token():
 def verify_code():
     em = request.json.get('email')
     code = random.randrange(1000, 9999)
-    send_email(em, code=code)
+    send_email.delay(em, code=code)
     RedisPipeline().set_verify_code(em, code)
     return suc_202('send email successfully')
 

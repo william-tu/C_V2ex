@@ -3,12 +3,13 @@ from flask import Flask
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
+from celery import Celery
 from config import Config
 
 db = SQLAlchemy()
 mail = Mail()
 cors = CORS()
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 
 
 def create_app():
@@ -17,6 +18,7 @@ def create_app():
     db.init_app(app)
     mail.init_app(app)
     cors.init_app(app)
+    celery.conf.update(app.config)
 
     from main import main
     app.register_blueprint(main, url_prefix='/api/v1.0')
