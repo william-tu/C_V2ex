@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div class="Post">
     <h1>{{ post.title }}</h1>
     <p v-html="post.body"></p>
   </div>
@@ -9,7 +9,7 @@
   import api from '@/api'
 
   export default {
-    name: "post",
+    name: "Post",
     props: ['id'],
     data() {
       return {
@@ -29,7 +29,7 @@
 </script>
 
 <style scoped>
-  .post {
+  .Post {
     background-color: white;
     padding: 10px 40px;
     text-align: left;

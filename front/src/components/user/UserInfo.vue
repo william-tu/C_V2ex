@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info">
+  <div class="UserInfo">
     <div class="avatar-wrapper">
       <el-upload
         class="avatar-uploader"
@@ -33,7 +33,7 @@
   import types from "../../store/types";
 
   export default {
-    name: "user-info",
+    name: "UserInfo",
     data() {
       return {
         avatar: store.state.userAvatar,
@@ -92,7 +92,7 @@
 </script>
 
 <style scoped>
-  .user-info {
+  .UserInfo {
     width: 1152px;
     height: 300px;
     margin: 0 auto;

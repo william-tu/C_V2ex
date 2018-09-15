@@ -5,7 +5,7 @@
         <el-input v-model="form.title"></el-input>
       </el-form-item>
       <el-form-item label="正文" prop="body">
-        <editor useCustomImageHandler
+        <editor :editorOptions="editorSettings"
                 @imageAdded="handleImageAdded" v-model="form.body"></editor>
 
       </el-form-item>
@@ -23,15 +23,28 @@
 
   import api from '@/api'
   import {VueEditor, Quill} from 'vue2-editor'
+  import ImageResize from 'quill-image-resize-module'
+
+  Quill.register('modules/imageResize', ImageResize)
 
   export default {
     name: "edit-post",
+
+    components: {
+      'editor': VueEditor
+    },
+
     data() {
       return {
         form: {
           title: '',
           body: ''
 
+        },
+        editorSettings: {
+          modules: {
+            imageResize: {}
+          }
         },
         qiniu: {
           token: '',
@@ -85,8 +98,21 @@
         })
       }
     },
-    components: {
-      'editor': VueEditor
+    computed: {
+      getTitle() {
+        return this.form.title
+      },
+      getBody() {
+        return this.form.body
+      }
+    },
+    watch: {
+      getTitle(val) {
+        this.$emit('titleChanged', val)
+      },
+      getBody(val) {
+        this.$emit('bodyChanged', val)
+      }
     }
 
   }
@@ -95,7 +121,6 @@
 <style scoped>
   .edit-post {
     background-color: white;
-    margin: 40px 100px;
     padding: 50px 50px;
     border: 1px solid #dcdfe6;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);

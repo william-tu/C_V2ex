@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 import Login from '@/components/Login.vue'
 import store from '@/store/store'
 import types from '@/store/types'
-import MainPostLayout from '@/components/main-posts/MainPostLayout'
+import MainPostLayout from '@/components/main/MainPostLayout'
 import UserInfoLayout from '@/components/user/UserInfoLayout'
-import edit_post from '@/components/edit/edit-post'
-import main_info from '@/components/user/main-info'
-import user_profile from '@/components/user/user-profile'
-import SinglePostLayout from '@/components/post/SinglePostLayout'
+import EditLayout from '@/components/edit/EditLayout'
+import main_info from '@/components/user/UserOtherInfo'
+import user_profile from '@/components/user/UserProfile'
+import SinglePostLayout from '@/components/post/PostLayout'
 
 Vue.use(VueRouter);
 
@@ -46,7 +46,7 @@ const routes = [
   {
     path: '/edit',
     name: 'edit',
-    component: edit_post
+    component: EditLayout
   },
   {
     path: '/post/:id',
@@ -60,7 +60,6 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
   routes
 });
 

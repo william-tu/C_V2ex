@@ -1,5 +1,5 @@
 <template>
-  <div class="main-info">
+  <div class="UserOtherInfo">
     <el-container>
       <el-aside width="350px">
         <el-row class="tac">
@@ -36,7 +36,7 @@
 
 <script>
   export default {
-    name: "main-info",
+    name: "UserOtherInfo",
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
@@ -49,7 +49,7 @@
   .el-aside {
     text-align: right;
   }
-  .main-info{
+  .UserOtherInfo{
     min-width: 1250px;
   }
 </style>

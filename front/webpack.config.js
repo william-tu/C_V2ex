@@ -58,7 +58,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/
       },
       {
         test: /\.(png|jpg|gif|svg|ttf|woff|woff2)$/,
@@ -85,7 +85,13 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+
+  plugins: [
+    new webpack.ProvidePlugin({
+      'window.Quill': 'quill'
+    })
+  ],
 }
 
 if (process.env.NODE_ENV === 'production') {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import user_info from './user-info'
+  import user_info from './UserInfo'
 
   export default {
     name: "UserInfoNav",
