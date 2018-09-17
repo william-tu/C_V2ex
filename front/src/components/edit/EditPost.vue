@@ -1,12 +1,13 @@
 <template>
   <div class="edit-post">
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-form ref="form" :rules="rules" label-width="80px">
       <el-form-item label="标题" prop="title">
-        <el-input v-model="form.title"></el-input>
+        <el-input v-model="title"></el-input>
       </el-form-item>
       <el-form-item label="正文" prop="body">
         <editor :editorOptions="editorSettings"
-                @imageAdded="handleImageAdded" v-model="form.body"></editor>
+                useCustomImageHandler
+                @imageAdded="handleImageAdded" v-model="body"></editor>
 
       </el-form-item>
       <el-form-item>
@@ -14,7 +15,6 @@
         <el-button @click="resetForm('form')">清空</el-button>
       </el-form-item>
     </el-form>
-
   </div>
 </template>
 
@@ -23,8 +23,10 @@
 
   import api from '@/api'
   import {VueEditor, Quill} from 'vue2-editor'
+  import {ImageDrop} from 'quill-image-drop-module'
   import ImageResize from 'quill-image-resize-module'
 
+  Quill.register('modules/imageDrop', ImageDrop)
   Quill.register('modules/imageResize', ImageResize)
 
   export default {
@@ -36,14 +38,13 @@
 
     data() {
       return {
-        form: {
-          title: '',
-          body: ''
 
-        },
+        title: '',
+        body: '',
         editorSettings: {
           modules: {
-            imageResize: {}
+            imageDrop: true,
+            imageResize: {modules: ['Resize', 'DisplaySize', 'Toolbar'],}
           }
         },
         qiniu: {
@@ -70,7 +71,7 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.axios.post(api.posts, {title: this.form.title, body: this.form.body}).then(res => {
+            this.axios.post(api.posts, {title: this.title, body: this.body}).then(res => {
               this.$message.success('发表成功')
               this.$router.push({name: 'post', params: {id: res.data.id}})
             }).catch(error => {
@@ -96,21 +97,14 @@
           Editor.insertEmbed(cursorLocation, 'image', url);
           resetUploader();
         })
-      }
-    },
-    computed: {
-      getTitle() {
-        return this.form.title
       },
-      getBody() {
-        return this.form.body
-      }
     },
+
     watch: {
-      getTitle(val) {
+      title(val) {
         this.$emit('titleChanged', val)
       },
-      getBody(val) {
+      body(val) {
         this.$emit('bodyChanged', val)
       }
     }

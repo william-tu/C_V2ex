@@ -28,6 +28,7 @@
         this.title = val
       },
       changeBody(val) {
+        console.log(val)
         this.body = val
       }
     }

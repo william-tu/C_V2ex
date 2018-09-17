@@ -33,6 +33,7 @@
     background-color: white;
     padding: 10px 40px;
     text-align: left;
+    overflow: hidden;
 
   }
 

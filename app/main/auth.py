@@ -42,8 +42,8 @@ def auth_error():
 @basic_auth.login_required
 def token():
     user = g.current_user
-    return jsonify({'token': user.generate_token(
-        expiration=3600), 'expiration': 3600})
+    return jsonify({'token': user.generate_token(current_app.config['TOKEN_EXPIRATION']),
+                    'expiration': current_app.config['TOKEN_EXPIRATION']})
 
 
 @main.route('/verifyCode', methods=['POST'])

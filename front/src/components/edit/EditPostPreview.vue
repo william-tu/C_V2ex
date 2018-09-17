@@ -20,6 +20,6 @@
     padding: 10px 40px;
     background-color: white;
     text-align: left;
-
+    overflow: hidden;
   }
 </style>

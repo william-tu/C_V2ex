@@ -122,7 +122,7 @@ class User(db.Model):
             db.session.add(self)
             db.session.commit()
 
-    def generate_token(self, expiration=3600):
+    def generate_token(self, expiration):
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id})
 
