@@ -19,6 +19,11 @@ class SaveMixin(object):
         db.session.commit()
 
 
+class TimestampMixin(object):
+    created = db.Column(db.DateTime, index=True, default=datetime.now)
+    update = db.Column(db.DateTime, default=datetime.now)
+
+
 class Permission(object):
     FOLLOW = 0x01
     COMMENT = 0x02
@@ -82,6 +87,10 @@ class User(db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     comments = db.relationship('Comments', backref='author', lazy='dynamic')
+    favor_posts = db.relationship('UserFavorPost', backref=db.backref('favor_user', lazy='joined'), lazy='dynamic',
+                                  cascade='all, delete-orphan')
+    favor_articles = db.relationship('UserFavorArticle', backref=db.backref('favor_user', lazy='joined'),
+                                     lazy='dynamic', cascade='all, delete-orphan')
     followed = db.relationship('Follow', foreign_keys=[Follow.follower_id],
                                backref=db.backref('follower', lazy='joined'), lazy='dynamic',
                                cascade='all, delete-orphan')
@@ -153,6 +162,42 @@ class User(db.Model):
     def is_followed_by(self, user):
         return self.followers.filter_by(follower_id=user.id).first() is not None
 
+    def favor_post(self, post):
+        if not self.has_favored_post(post):
+            UserFavorPost(favor_user=self, favor_post=post).save()
+
+    def favor_article(self, article):
+        if not self.has_favored_article(article):
+            UserFavorArticle(favor_user=self, favor_article=article).save()
+
+    def cancel_favor_post(self, post):
+        p = self.favor_posts.filter_by(post_id=post.id).first()
+        if p:
+            p.delete()
+
+    def cancel_favor_article(self, article):
+        a = self.favor_articles.filter_by(article_id=article.id).first()
+        if a:
+            a.delete()
+
+    def has_favored_post(self, post):
+        return self.favor_posts.filter_by(post_id=post.id).first() is not None
+
+    def has_favored_article(self, article):
+        return self.favor_articles.filter_by(article_id=article.id).first() is not None
+
+
+class UserFavorPost(SaveMixin, TimestampMixin, db.Model):
+    __tablename__ = 'user_favor_post'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
+
+
+class UserFavorArticle(SaveMixin, TimestampMixin, db.Model):
+    __tablename__ = 'user_favor_article'
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    article_id = db.Column(db.Integer, db.ForeignKey('article.id'), primary_key=True)
+
 
 class Post(db.Model):
     __tablename__ = 'posts'
@@ -163,6 +208,8 @@ class Post(db.Model):
     update = db.Column(db.DateTime, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comments', backref='posts', lazy='dynamic')
+    favor_users = db.relationship('UserFavorPost', backref=db.backref('favor_post', lazy='joined'), lazy='dynamic',
+                                  cascade='all, delete-orphan')
     cover_image = db.Column(db.String(128))  # 封面图片
 
     def to_json(self):
@@ -233,6 +280,8 @@ class Article(db.Model):
     image_url = db.Column(db.String(128))
     add_time = db.Column(db.DateTime, default=datetime.now)
     source_from = db.Column(db.String(64), nullable=False)
+    favor_users = db.relationship('UserFavorArticle', backref=db.backref('favor_article', lazy='joined'),
+                                  lazy='dynamic', cascade='all, delete-orphan')
 
     def to_json(self):
         return {

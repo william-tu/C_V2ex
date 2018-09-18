@@ -39,7 +39,6 @@ def get_post(id):
 
 
 @main.route('/posts/<int:id>', methods=['DELETE'])
-@basic_auth.login_required
 @permission_required(Permission.MODERATE_ARTICLES_COMMENTS)
 def delete_post(id):
     post = Post.query.get_or_404(id)
@@ -48,7 +47,6 @@ def delete_post(id):
 
 
 @main.route('/posts', methods=['POST'])
-@basic_auth.login_required
 @json_field_acceptable(['body'])
 @permission_required(Permission.WRITE_ARTICLES)
 def new_post():

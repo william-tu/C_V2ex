@@ -4,7 +4,7 @@ from flask_script import Manager, Shell, Command
 from gevent.pywsgi import WSGIServer
 
 from app import create_app, db
-from app.models import Role, User, Follow, Comments
+from app.models import Role, User, Follow, Comments, Article, Post, UserFavorArticle, UserFavorPost
 
 app = create_app()
 
@@ -25,7 +25,9 @@ class RunServer(Command):
 
 
 def _make_context():
-    return dict(app=app, Role=Role, User=User, Follow=Follow, db=db, Comments=Comments)
+    return dict(app=app, Role=Role, User=User, Follow=Follow, db=db, Comments=Comments, Article=Article, Post=Post,
+                UserFavorArticle=UserFavorArticle, UserFavorPost=UserFavorPost, test_user=User.query.first(),
+                test_article=Article.query.first(), test_post=Post.query.first())
 
 
 manager.add_command("shell", Shell(make_context=_make_context))

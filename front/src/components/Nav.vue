@@ -100,4 +100,9 @@
     float: right;
 
   }
+  .el-icon-edit{
+    vertical-align: baseline;
+    font-size: 16px;
+    color: #37a;
+  }
 </style>

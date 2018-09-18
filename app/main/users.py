@@ -28,7 +28,6 @@ def current_user():
 
 
 @main.route('/users/<int:id>/info', methods=['GET', 'PUT'])
-@basic_auth.login_required
 @json_params_required([{'methods': ['PUT'], 'field': 'avatar', 'required': False}])
 @user_own_required(methods=['PUT'], user_id_key='id')
 def get_user(id):

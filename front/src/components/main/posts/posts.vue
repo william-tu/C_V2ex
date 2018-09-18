@@ -20,6 +20,8 @@
                                                                       alt=""></router-link>
           </el-aside>
         </el-container>
+        <div class="post-info"><i class="el-icon-favor"> </i><span>12喜欢</span><i class="el-icon-comment"></i><span>评论</span></div>
+
       </el-container>
     </div>
     <br>
@@ -93,6 +95,8 @@
 </script>
 
 <style scoped>
+  @import '../../../assets/icon/iconfont.css';
+
   .cell {
     padding: 10px;
     text-align: left;
@@ -119,5 +123,21 @@
 
   .pic {
     line-height: 16px;
+  }
+
+  .post-info {
+    padding-left: 40px;
+    padding-top: 5px;
+  }
+
+  i {
+    margin-right: 10px;
+  }
+
+  span {
+    color: rgb(170, 170, 170);
+    font-size: 14px;
+    vertical-align: text-top;
+    margin-right: 20px;
   }
 </style>
