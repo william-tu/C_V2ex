@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/components/Login.vue'
+import Login from '@/views/Login.vue'
 import store from '@/store/store'
 import types from '@/store/types'
-import MainPostLayout from '@/components/main/MainPostLayout'
-import UserInfoLayout from '@/components/user/UserInfoLayout'
-import EditLayout from '@/components/edit/EditLayout'
-import main_info from '@/components/user/UserOtherInfo'
-import user_profile from '@/components/user/UserProfile'
-import SinglePostLayout from '@/components/post/PostLayout'
+import MainPostLayout from '@/views/main/MainPostLayout'
+import UserInfoLayout from '@/views/user/UserInfoLayout'
+import EditLayout from '@/views/edit/EditLayout'
+import main_info from '@/views/user/UserOtherInfo'
+import user_profile from '@/views/user/UserProfile'
+import SinglePostLayout from '@/views/post/PostLayout'
 
 Vue.use(VueRouter);
 

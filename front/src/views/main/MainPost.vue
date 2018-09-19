@@ -13,8 +13,8 @@
 </template>
 
 <script>
-  import articles from './posts/articles'
-  import posts from './posts/posts'
+  import articles from './tabs/articles'
+  import posts from './tabs/posts'
 
   export default {
     name: "MainPost",

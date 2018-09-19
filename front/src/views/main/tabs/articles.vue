@@ -1,26 +1,8 @@
 <template>
   <div class="articles">
-    <div class="cell" v-for="post in posts">
-      <el-container>
-        <el-header :height="height">
-          <div class="pic"><a target="_blank" :href="post.message_url"><img v-bind:src="post.avatar" alt="" width="16px"
-                                                                            height="16px"
-                                                                            style="opacity:0.75;margin-right: 6px;"></a><a
-            href="" style="color: #aaa;font-size:13px;vertical-align:top">{{ post.source_from }}</a></div>
-        </el-header>
-        <el-container>
-          <el-main>
-            <div style="margin-bottom: 10px"><a target="_blank" :href="post.message_url">{{ post.title }}</a></div>
-            <div v-html="post.content.slice(0,140)">...</div>
-          </el-main>
-
-          <el-aside width="100px"><a target="_blank" :href="post.message_url"><img id='thumbnail'
-                                                                                   :src="post.image_url"
-                                                                                   alt=""></a>
-          </el-aside>
-        </el-container>
-      </el-container>
-    </div>
+    <template v-for="post in posts">
+      <article_cell :post="post"></article_cell>
+    </template>
     <br>
     <el-pagination
       background
@@ -33,6 +15,8 @@
 </template>
 
 <script>
+  import article_cell from '@/components/article-cell'
+
   export default {
     name: "articles",
     data() {
@@ -42,6 +26,9 @@
         totalPage: 1,
         height: '30'
       }
+    },
+    components: {
+      article_cell,
     },
     mounted: function () {
       this.axios.get('/articles').then((res) => {
@@ -96,32 +83,7 @@
 </script>
 
 <style scoped>
-  .cell {
-    padding: 10px;
-    text-align: left;
-    background-color: white;
-    margin-top: 30px;
 
-  }
 
-  #thumbnail {
-    height: 100px;
-    width: 100px;
-    background-size: cover;
-    display: block;
-  }
 
-  .el-main {
-    padding: 0 40px;
-    padding-bottom: 10px;
-  }
-
-  .el-header {
-    padding-left: 40px;
-    padding-bottom: 10px;
-  }
-
-  .pic {
-    line-height: 16px;
-  }
 </style>

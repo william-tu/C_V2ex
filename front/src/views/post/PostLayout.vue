@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import post from '@/components/post/Post'
+  import post from '@/views/post/Post'
 
   export default {
     name: "PostLayout",

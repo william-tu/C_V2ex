@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import navba from './components/Nav.vue'
+  import navba from './views/Nav.vue'
 
 
   export default {
