@@ -63,17 +63,20 @@ def suc_204(message):
     return response
 
 
-def pagination_response(model, order_by_field=None, desc=True):
+def pagination_response(model_or_query, order_by_field=None, desc=True):
     page = request.args.get('page', 1, type=int)
+    if hasattr(model_or_query, 'query'):
+        model_or_query = model_or_query.query
     if order_by_field:
         if desc:
-            pagination = model.query.order_by(model_desc(order_by_field)).paginate(page, per_page=current_app.config[
+            pagination = model_or_query.order_by(model_desc(order_by_field)).paginate(page, per_page=current_app.config[
                 'POSTS_PER_PAGE'], error_out=True)
         else:
-            pagination = model.query.order_by(order_by_field).paginate(page, per_page=current_app.config[
+            pagination = model_or_query.order_by(order_by_field).paginate(page, per_page=current_app.config[
                 'POSTS_PER_PAGE'], error_out=True)
     else:
-        pagination = model.query.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=True)
+        pagination = model_or_query.paginate(page, per_page=current_app.config['POSTS_PER_PAGE'],
+                                             error_out=True)
     objs = pagination.items
     prev = None
     if pagination.has_prev:

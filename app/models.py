@@ -192,6 +192,12 @@ class UserFavorPost(SaveMixin, TimestampMixin, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), primary_key=True)
 
+    def to_json(self):
+        return {
+            'user': self.favor_user.to_json(),
+            'post': self.favor_post.to_json(),
+        }
+
 
 class UserFavorArticle(SaveMixin, TimestampMixin, db.Model):
     __tablename__ = 'user_favor_article'
@@ -220,7 +226,11 @@ class Post(db.Model):
             'created': self.created,
             'update': self.update,
             'author': url_for('main.get_user', id=self.author_id, _external=True),
-            'cover_image': self.cover_image
+            'cover_image': self.cover_image,
+            'favor_users': url_for('main.get_post_favor_users', id=self.id, _external=True),
+            'favor_users_count': self.favor_users.count(),
+            'comments': url_for('main.get_post_comments', id=self.id, _external=True),
+            'comments_count': self.comments.count()
         }
 
     @staticmethod
@@ -292,4 +302,6 @@ class Article(db.Model):
             'image_url': self.image_url,
             'add_time': self.add_time.strftime('%Y-%m-%d %H:%M:%S'),
             'source_from': self.source_from,
+            'favor_users': url_for('main.get_post_favor_users', id=self.id, _external=True),
+            'favor_users_count': self.favor_users.count(),
         }

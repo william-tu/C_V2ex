@@ -13,7 +13,7 @@ celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='')
     app.config.from_object(Config)
     db.init_app(app)
     mail.init_app(app)
@@ -22,5 +22,11 @@ def create_app():
 
     from main import main
     app.register_blueprint(main, url_prefix='/api/v1.0')
+
+    from flask import render_template
+
+    @app.route('/', methods=['GET'])
+    def index():
+        return render_template('index.html')
 
     return app

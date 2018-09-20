@@ -3,7 +3,7 @@ from flask import jsonify, request, g, current_app, url_for
 
 from app.decorates import json_field_acceptable, permission_required
 from app.models import Post, User, Permission
-from app.responses import suc_204
+from app.responses import suc_204, pagination_response
 from auth import basic_auth
 from . import main
 from sqlalchemy import desc
@@ -47,6 +47,7 @@ def delete_post(id):
 
 
 @main.route('/posts', methods=['POST'])
+@basic_auth.login_required
 @json_field_acceptable(['body'])
 @permission_required(Permission.WRITE_ARTICLES)
 def new_post():
@@ -54,3 +55,9 @@ def new_post():
     post.author = g.current_user
     post.save()
     return jsonify(post.to_json())
+
+
+@main.route('/posts/<int:id>/favor/user')
+def get_post_favor_users(id):
+    post = Post.query.get_or_404(id)
+    return pagination_response(post.favor_users)

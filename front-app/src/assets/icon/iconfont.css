@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'iconfont';  /* project id 842989 */
+  src: url('//at.alicdn.com/t/font_842989_hesro17v1y.eot');
+  src: url('//at.alicdn.com/t/font_842989_hesro17v1y.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_842989_hesro17v1y.woff') format('woff'),
+  url('//at.alicdn.com/t/font_842989_hesro17v1y.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_842989_hesro17v1y.svg#iconfont') format('svg');
+}
+
+[class^='el-icon-favor']:before, [class*=' el-icon-favor']:before {
+  content: "\e667";
+}
+
+[class^='el-icon-favor'], [class*=' el-icon-favor'] {
+  font-family: "iconfont" !important;
+  font-size: 20px;
+  font-style: normal;
+  color: rgb(170, 170, 170);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+[class^='el-icon-favor']:hover, [class*=' el-icon-favor']:hover{
+  color: red;
+  cursor: pointer;
+}
+
+[class^='el-icon-comment']:before, [class*=' el-icon-comment']:before {
+  content: "\e666";
+}
+[class^='el-icon-comment'], [class*=' el-icon-comment'] {
+  font-family: "iconfont" !important;
+  font-size: 20px;
+  font-style: normal;
+  color: rgb(170, 170, 170);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
