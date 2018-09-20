@@ -58,6 +58,14 @@
                 path: this.$route.query.redirect || '/'
 
               });
+              this.axios({
+                method: 'get',
+                url: '/current-user/info',
+              }).then((res) => {
+                store.commit(types.setUserInfo, {username: res.data.username, id: res.data.id, avatar: res.data.avatar})
+              }).catch((error) => {
+                console.log(error);
+              })
             }).catch((error) => {
               if (error.response) {
                 console.log(error.response);
@@ -72,14 +80,7 @@
             this.$message.error("表单填写不正确，请检查");
             return false
           }
-          this.axios({
-            method: 'get',
-            url: '/current-user/info',
-          }).then((res) => {
-            store.commit(types.setUserInfo, {username: res.data.username, id: res.data.id, avatar: res.data.avatar})
-          }).catch((error) => {
-            console.log(error);
-          })
+
 
         })
 
