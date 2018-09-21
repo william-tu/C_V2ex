@@ -27,16 +27,20 @@ def current_user():
         return suc_201('update successfully')
 
 
-@main.route('/users/<int:id>/info', methods=['GET', 'PUT'])
-@json_params_required([{'methods': ['PUT'], 'field': 'avatar', 'required': False}])
-@user_own_required(methods=['PUT'], user_id_key='id')
+@main.route('/users/<int:id>/info', methods=['GET'])
 def get_user(id):
     u = User.query.get_or_404(id)
     if request.method == 'GET':
         return jsonify(u.to_json())
-    elif request.method == 'PUT':
-        u.from_json(request.json)
-        return suc_201('update successfully')
+
+
+@main.route('/users/<int:id>/info', methods=['GET', 'PUT'])
+@basic_auth.login_required
+@user_own_required(methods=['PUT'], user_id_key='id')
+def put_user(id):
+    u = User.query.get_or_404(id)
+    u.from_json(request.json)
+    return suc_201('update successfully')
 
 
 @main.route('/users/<int:user_id>/favor/posts/<int:post_id>', methods=['GET', 'POST', 'DELETE'])

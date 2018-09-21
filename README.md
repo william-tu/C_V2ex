@@ -16,15 +16,15 @@
 * Celery
 
 ### 技术介绍
-使用Redis对高请求的接口数据进行存储与备份
+- 使用Redis对高请求的接口数据进行存储与备份
 
-使用Celery和Redis异步处理任务，提高并发与稳定性
+- 使用Celery和Redis异步处理任务，提高并发与稳定性
 
-设计Restful Api,解决跨域问题，降低前后端耦合
+- 设计Restful Api,解决跨域问题，降低前后端耦合
 
-使用Nginx+supervisor+gunicorn+virtualenv进行部署
+- 使用Nginx+supervisor+gunicorn+virtualenv进行部署
 
-灵活使用第三发库和服务（邮件服务，七牛云等）
+- 灵活使用第三发库和服务（邮件服务，七牛云等）
 
 ### 前端技术栈
 * Vue
