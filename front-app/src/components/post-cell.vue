@@ -2,9 +2,10 @@
   <div class="post-cell">
     <el-container>
       <el-header v-bind:height="height">
-        <div class="pic"><a href=""><img v-bind:src="post.avatar" alt="" width="16px" height="16px"
-                                         style="opacity:0.75;margin-right: 6px"></a><a
-          href="" style="color: #aaa;font-size:13px;vertical-align:top">{{ post.username}}</a></div>
+        <div class="pic">
+          <user-thumbnail-avatar :userId="1" :avatar="post.avatar"></user-thumbnail-avatar>
+          <a
+            href="" style="color: #aaa;font-size:13px;vertical-align:top">{{ post.username}}</a></div>
       </el-header>
       <el-container>
         <el-main>
@@ -29,11 +30,15 @@
 <script>
   import api from '@/api';
   import store from '@/store/store'
+  import userThumbnailAvatar from './user-thumbnail-avatar'
 
   export default {
     name: "post-cell",
 
     props: ['post'],
+    components: {
+      'user-thumbnail-avatar': userThumbnailAvatar
+    },
     data() {
       return {
         height: '30',

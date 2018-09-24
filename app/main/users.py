@@ -34,7 +34,7 @@ def get_user(id):
         return jsonify(u.to_json())
 
 
-@main.route('/users/<int:id>/info', methods=['GET', 'PUT'])
+@main.route('/users/<int:id>/info', methods=['PUT'])
 @basic_auth.login_required
 @user_own_required(methods=['PUT'], user_id_key='id')
 def put_user(id):
