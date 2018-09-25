@@ -19,7 +19,12 @@
     props: ['id'],
     data() {
       return {
-        post: ''
+        post: {
+          author:{
+            avatar: '',
+
+          }
+        }
       }
     },
     components: {
@@ -28,9 +33,10 @@
     },
     mounted() {
       this.axios.get(api.posts + '/' + this.id).then((res) => {
-          this.post = res.data;
-          this.axios.get(this.post.author).then(res => {
-            this.post.author = res.data
+          let author = res.data.author;
+          this.post = res.data
+          this.axios.get(author).then(res => {
+            this.$set(this.post, 'author', res.data)
           })
         }
       ).catch((error) => {
@@ -54,7 +60,8 @@
   span {
     vertical-align: top;
   }
-  .username{
+
+  .username {
     font-weight: 600;
     color: #444;
   }

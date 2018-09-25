@@ -7,7 +7,11 @@ import Vue from 'vue'
 
 
 axios.defaults.timeout = 5000
-axios.defaults.baseURL = 'http://115.159.120.134/api/v1.0'
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://127.0.0.1:5000/api/v1.0'
+} else {
+  axios.defaults.baseURL = 'http://115.159.120.134/api/v1.0'
+}
 
 axios.interceptors.request.use(
   config => {
